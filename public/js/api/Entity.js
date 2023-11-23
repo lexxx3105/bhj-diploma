@@ -3,13 +3,20 @@
  * Имеет свойство URL, равно пустой строке.
  * */
 class Entity {
+  static URL = ``;
   /**
    * Запрашивает с сервера список данных.
    * Это могут быть счета или доходы/расходы
    * (в зависимости от того, что наследуется от Entity)
    * */
   static list(data, callback){
-
+    createRequest({
+      url: this.URL,
+      responseType: `json`,
+      method: `GET`,
+      data,
+      callback
+    });
   }
 
   /**
@@ -18,7 +25,13 @@ class Entity {
    * что наследуется от Entity)
    * */
   static create(data, callback) {
-
+    createRequest({
+      url: this.URL,
+      responseType: `json`,
+      method: `PUT`,
+      data,
+      callback
+    });
   }
 
   /**
@@ -26,6 +39,12 @@ class Entity {
    * (в зависимости от того, что наследуется от Entity)
    * */
   static remove(data, callback ) {
-
+    createRequest({
+      url: this.URL,
+      responseType: `json`,
+      method: `DELETE`,
+      data,
+      callback
+    });
   }
 }
