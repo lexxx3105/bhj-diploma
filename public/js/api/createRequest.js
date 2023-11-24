@@ -25,10 +25,7 @@ const createRequest = (options = {}) => {
             formData.append(`${key}`, `${value}`);
         }
         url = `${options.url}`;
-    }
-
-
-    
+    }  
     xhr.responseType = options.responseType;
     try {
         xhr.open(options.method, url);
