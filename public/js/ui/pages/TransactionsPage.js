@@ -180,8 +180,6 @@ class TransactionsPage {
         </button>
     </div>`);
     return elem;
-
-
   }
 
   /**
@@ -193,6 +191,5 @@ class TransactionsPage {
     data.forEach(el => {
       document.querySelector(`.content`).insertAdjacentElement(`.beforeend`, this.getTransactionHTML(el));
     });
-
   }
 }
