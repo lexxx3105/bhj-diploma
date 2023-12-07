@@ -18,7 +18,7 @@ class User {
    * пользователе из локального хранилища.
    * */
   static unsetCurrent() {
-    localStorage.clear();
+    localStorage.removeItem('user');
   }
 
   /**
@@ -35,20 +35,20 @@ class User {
    * авторизованном пользователе.
    * */
   static fetch(callback) {
-    createRequest ({
+    createRequest({
       url: this.URL + `/current`,
       method: `GET`,
-      responseType: `JSON`,
+      responseType: `json`,
       callback: (err, response) => {
+      
         if (response && response.success) {
           this.setCurrent(response.user);
         } else {
           this.unsetCurrent();
         }
-        callback(err, response)
+        callback(err, response);
       }
     })
-
   }
 
   /**
