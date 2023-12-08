@@ -26,8 +26,7 @@ class User {
    * из локального хранилища
    * */
   static current() {
-    const user = localStorage.getItem(`user`);
-    return JSON.parse(user);
+    return JSON.parse(localStorage.getItem(`user`));
   }
 
   /**
@@ -36,19 +35,18 @@ class User {
    * */
   static fetch(callback) {
     createRequest({
-      url: this.URL + `/current`,
+      url: `${this.URL}/current`,
       method: `GET`,
       responseType: `json`,
       callback: (err, response) => {
-      
-        if (response && response.success) {
+        if (response?.success) {
           this.setCurrent(response.user);
         } else {
           this.unsetCurrent();
         }
         callback(err, response);
       }
-    })
+    });
   }
 
   /**
@@ -59,13 +57,13 @@ class User {
    * */
   static login(data, callback) {
     createRequest({
-      url: this.URL + '/login',
+      url: `${this.URL}/login`,
       method: 'POST',
       responseType: 'json',
       data,
-      callback: (err, response) => {
-        if (response && response.user) {
-          this.setCurrent(response.user);
+      callback: (err, { user, ...response }) => {
+        if (user) {
+          this.setCurrent(user);
         }
         callback(err, response);
       }
@@ -80,19 +78,17 @@ class User {
    * */
   static register(data, callback) {
     createRequest({
-      url: this.URL + '/register',
+      url: `${this.URL}/register`,
       method: 'POST',
       responseType: 'json',
       data,
-      callback: (err, response) => {
-        if (response && response.user) {
-          this.setCurrent(response.user);
+      callback: (err, { user, ...response }) => {
+        if (user) {
+          this.setCurrent(user);
         }
         callback(err, response);
       }
-
     });
-
   }
 
   /**
@@ -101,11 +97,11 @@ class User {
    * */
   static logout(callback) {
     createRequest({
-      url: this.URL + '/logout',
+      url: `${this.URL}/logout`,
       method: 'POST',
       responseType: 'json',
       callback: (err, response) => {
-        if (response && response.success) {
+        if (response?.success) {
           this.unsetCurrent();
         }
         callback(err, response);
@@ -113,3 +109,4 @@ class User {
     });
   }
 }
+
