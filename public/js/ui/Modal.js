@@ -25,11 +25,9 @@ class Modal {
    * (с помощью метода Modal.onClose)
    * */
   registerEvents() {
-    const bt = Array.from(this.element.querySelectorAll(`button`));
+    const bt = Array.from(this.element.querySelectorAll('button[data-dismiss="modal"]'));
     bt.forEach(el => {
-      if(el.dataset.dismiss = `madal`) {
-        el.addEventListner(`click`, () => this.onClose());
-      }
+      el.addEventListener('click', () => this.onClose());
     });
   }
 

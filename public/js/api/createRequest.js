@@ -3,36 +3,39 @@
  * на сервер.
  * */
 const createRequest = (options = {}) => {
-    const xhr = new XMLHttpRequest(),
-        arr = [],
-        formData = new FormData();
-    let url;
-    if (options.method === `GET`) {
-        if (options.data) {
-            for (let i of Object.entries(options.data)) {
-                const key = i[0],
-                    value = i[1];
+    const xhr = new XMLHttpRequest();
+    let url = options.url;
+    const formData = new FormData();
+    const GET = 'GET';
 
+    if (options.method === GET) {
+        const arr = [];
+        if (options.data) {
+            for (let [key, value] of Object.entries(options.data)) {
                 arr.push(`${key}=${value}`);
             }
-
         }
-        url = options.data ? `${options.url}?${arr.join(`&`)}` : `${options.url}`;
+        url = options.data ? `${url}?${arr.join(`&`)}` : url;
     } else {
-        for (let i of Object.entries(options.data)) {
-            const key = i[0],
-                value = i[1];
-            formData.append(`${key}`, `${value}`);
+        for (let [key, value] of Object.entries(options.data)) {
+            formData.append(key, value);
         }
-        url = `${options.url}`;
-    }  
+    }
+
     xhr.responseType = options.responseType;
+
+    xhr.onload = () => {
+        if (xhr.status >= 200 && xhr.status < 300) {
+            options.callback(null, xhr.response);
+        } else {
+            options.callback(xhr.statusText, null);
+        }
+    };
+
     try {
         xhr.open(options.method, url);
-        xhr.send(formData);
+        xhr.send(options.method === GET ? null : formData);
     } catch (e) {
-        return  new Error(`Что то пошло не так`, e);
-
+        return new Error('Что-то пошло не так', e);
     }
-    xhr.onload = () => options.callback(xhr.error, xhr.response);
-}
+};
