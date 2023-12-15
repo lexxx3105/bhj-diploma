@@ -6,6 +6,7 @@ const createRequest = (options = {}) => {
     const xhr = new XMLHttpRequest();
     let url = options.url;
     const formData = new FormData();
+    const GET = 'GET_METHOD_NAME'
 
     if (options.method === GET) {
         const arr = [];
