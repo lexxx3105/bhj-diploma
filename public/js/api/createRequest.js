@@ -6,9 +6,8 @@ const createRequest = (options = {}) => {
     const xhr = new XMLHttpRequest();
     let url = options.url;
     const formData = new FormData();
-    const GET = 'GET_METHOD_NAME'
 
-    if (options.method === GET) {
+    if (options.method === `GET`) {
         const arr = [];
         for (let [key, value] of Object.entries(options.data || {})) {
                 arr.push(`${key}=${value}`);
@@ -30,8 +29,9 @@ const createRequest = (options = {}) => {
 
     try {
         xhr.open(options.method, url);
-        xhr.send(options.method === GET ? null : formData);
+        xhr.send(options.method === `GET` ? null : formData);
     } catch (e) {
         return new Error('Что-то пошло не так', e);
     }
 };
+

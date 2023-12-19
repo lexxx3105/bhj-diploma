@@ -38,6 +38,7 @@ class User {
       url: `${this.URL}/current`,
       method: `GET`,
       responseType: `json`,
+      data: User.current(),
       callback: (err, response) => {
         if (response?.success) {
           this.setCurrent(response.user);
